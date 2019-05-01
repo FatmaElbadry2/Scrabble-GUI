@@ -1,0 +1,9 @@
+Rana Hagar
+R CREATE A B R C E F G
+S P1 1
+M P2 C 2 2
+M P2 T 0 2
+S P2 1
+S P1 1
+S P2 1
+S P1 1
