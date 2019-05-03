@@ -29,6 +29,7 @@ public class Enter : MonoBehaviour
         playPanel.SetActive(false);
         
         Rack.getpos();
+       
          
     }
 }

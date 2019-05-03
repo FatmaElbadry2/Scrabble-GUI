@@ -47,8 +47,8 @@ public class Scores : MonoBehaviour
         {
             scoreboardrprefab.SetActive(true);
             P1name.text = Pl1name;
-            P1Score.text = (pl1score + newscore).ToString();
-            pl1score = pl1score + newscore;
+            P1Score.text =  newscore.ToString();
+            pl1score =  newscore;
             P1word.text = word;
             turn++;
 
@@ -58,8 +58,8 @@ public class Scores : MonoBehaviour
            
             scoreboardrprefab1.SetActive(true);
             P2name.text = Pl2name;
-            P2Score.text = (pl2score + newscore).ToString();
-            pl2score = pl2score + newscore;
+            P2Score.text =  newscore.ToString();
+            pl2score =  newscore;
             P2word.text = word;
             word1 = word;
             turn++;
@@ -68,8 +68,8 @@ public class Scores : MonoBehaviour
         {
             scoreboardrprefab2.SetActive(true);
             P3name.text = Pl1name;
-            P3Score.text = (pl1score + newscore).ToString();
-            pl1score = pl1score + newscore;
+            P3Score.text =  newscore.ToString();
+            pl1score =  newscore;
             P3word.text = word;
             word2 = word;
             turn++;
@@ -95,8 +95,8 @@ public class Scores : MonoBehaviour
 
              
                 P3name.text = Pl2name;
-                P3Score.text = (pl2score + newscore).ToString();
-                pl2score = pl2score + newscore;
+                P3Score.text =  newscore.ToString();
+                pl2score =  newscore;
                 P3word.text = word;
                 word2 = word;
                 turn++;
@@ -121,8 +121,8 @@ public class Scores : MonoBehaviour
 
                 
                 P3name.text = Pl1name;
-                P3Score.text = (pl1score + newscore).ToString();
-                pl1score = pl1score + newscore;
+                P3Score.text =  newscore.ToString();
+                pl1score = newscore;
                 P3word.text = word;
                 word2 = word;
                 turn++;

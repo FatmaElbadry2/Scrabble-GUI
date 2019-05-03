@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    static public List <string> HintWord = new List<string>();
+    static public List<int> HintRow=new List<int>();
+    static public List<int> HintCol= new List<int>();
 
     public Scores score;
    // public RackHM rack;
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
         score.start(input);
         input.Clear();
         frame = 0;
+   
 
        
     }
@@ -44,7 +48,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         timer.TimerUpdate("10");
-        //StartCoroutine(message.MessageUpdate("Hello"));
+        message.Display("you're an idiot");
         if (!sr.EndOfStream && frame % 300000 == 0)
         {
             

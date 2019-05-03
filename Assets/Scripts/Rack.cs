@@ -24,9 +24,7 @@ public class Rack : MonoBehaviour
     int x;
     float row = -4.25f;
     float coloumn = -8.9f;
-    static List<string> HintWord = new List<string>();
-    static List<int> HintRow = new List<int>();
-    static List<int> HintCol = new List<int>();
+
     static string[] Line;
     public static List<Vector3> Rpos = new List<Vector3>();
 
@@ -38,7 +36,8 @@ public class Rack : MonoBehaviour
 
         for (int i = 0; i < LetterList.Count; i++)
         {
-            if (LetterList[i].transform.position.x >= 0 && LetterList[i].transform.position.x <= 9.1 && RorB[i] == 1)
+            
+            if (LetterList[i].transform.position.x >= 0 && LetterList[i].transform.position.x <= 9.75 && RorB[i] == 1)
             {
                 letters.Add(LetterList[i].GetComponent<SpriteRenderer>().sprite.name);
                 col = (int)((LetterList[i].transform.position.x) / 0.65f);
@@ -52,6 +51,10 @@ public class Rack : MonoBehaviour
                     row1 = (int)(((LetterList[i].transform.position.y) / 0.65f) )+7;
                     Debug.Log(row1.ToString());
                 }
+                else if (LetterList[i].transform.position.y ==0)
+                {
+                    row1 = 7;
+                }
                 rows.Add(row1);
                 colomuns.Add(col);
             }
@@ -61,42 +64,25 @@ public class Rack : MonoBehaviour
 
     static public IEnumerator getHint()
     {
-        StreamReader sr = new StreamReader("Hints.txt");
-        Line = sr.ReadLine().Split();
-        for (int i = 0; i < Line.Length; i++)
-        {
-            HintWord.Add(Line[i]);
-        }
-
-        Line = sr.ReadLine().Split();
-        for (int i = 0; i < Line.Length; i++)
-        {
-            HintRow.Add(int.Parse(Line[i]));
-        }
-
-        Line = sr.ReadLine().Split();
-        for (int i = 0; i < Line.Length; i++)
-        {
-            HintCol.Add(int.Parse(Line[i]));
-        }
+       
 
         List<Vector3> originalPos = new List<Vector3>();
         List<int> index = new List<int>();
 
-        for (int i = 0; i < HintWord.Count; i++)
+        for (int i = 0; i < GameManager.HintWord.Count; i++)
         {
             Vector3 pos;
             
             Rack R = new Rack();
             for (int j = 0; j < LetterList.Count; j++)
             {
-                if ((HintWord[i] == LetterList[j].GetComponent<SpriteRenderer>().sprite.name) && (LetterList[j].transform.position.y == -4.25f) && (LetterList[j].transform.position.x > -9.8f) && (LetterList[j].transform.position.x < -5))
+                if ((GameManager.HintWord[i] == LetterList[j].GetComponent<SpriteRenderer>().sprite.name) && (LetterList[j].transform.position.y == -4.25f) && (LetterList[j].transform.position.x > -9.8f) && (LetterList[j].transform.position.x < -5))
                 {
                     originalPos.Add(LetterList[j].transform.position);
                     index.Add(j);
 
                     LetterList[j].GetComponent<SpriteRenderer>().color = new Color(1f, 0.7568628f, 0.6901961f);
-                    pos = R.GetPos(HintRow[i].ToString(), HintCol[i].ToString());
+                    pos = R.GetPos(GameManager.HintRow[i].ToString(), GameManager.HintCol[i].ToString());
                     //pos=new Vector3(0,0,0);
                     LetterList[j].transform.position = pos;
                     LetterList[j].transform.localScale = new Vector3(0.8f, 0.8f, 0);
@@ -112,7 +98,7 @@ public class Rack : MonoBehaviour
 
         
 
-        for (int i = 0; i < HintWord.Count; i++)
+        for (int i = 0; i < GameManager.HintWord.Count; i++)
         {
             yield return new WaitForSecondsRealtime(1);
             LetterList[index[i]].transform.position = originalPos[i];
@@ -120,10 +106,10 @@ public class Rack : MonoBehaviour
             LetterList[index[i]].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
            
         } 
-        HintWord.Clear();
-        HintCol.Clear();
-        HintRow.Clear();
-        sr.Close();
+        GameManager.HintWord.Clear();
+        GameManager. HintCol.Clear();
+        GameManager. HintRow.Clear();
+        
     }
     static public void FSwap()
     {
@@ -216,7 +202,7 @@ public class Rack : MonoBehaviour
     }
       
 
-    public void Answer(string ans)
+    static public void Answer(string ans)
     {
         if (ans=="YES")
         {
@@ -243,6 +229,7 @@ public class Rack : MonoBehaviour
                             LetterList[i].transform.position=Rpos[K];
                             LetterList[i].transform.transform.localScale=new Vector3(1,1,0);
                             EmptyPlaces[K]=1;
+                            break;
                         }
                     }
                 }

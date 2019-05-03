@@ -89,14 +89,19 @@ public class ItemDragHandler : MonoBehaviour
         else if(worldPos.x+ 0.325 >= 0 && worldPos.x+ 0.325 <= 9.75 && worldPos.y >= -5.2 && worldPos.y <= 4.55)
         {
             col = (int)((worldPos.x+0.325f) / 0.65f);
-            if (worldPos.y > 0)
+            if (worldPos.y+0.1625f > 0)
             {
-                row = (int)((((worldPos.y)-0.325f )/ 0.65f) + 7);
+                row = (int)((((worldPos.y) +0.1625f )/ 0.65f) + 7);
             }
-            else if (worldPos.y < 0)
+            else if (worldPos.y-0.1625f < 0)
             {
-                row = (int)((((worldPos.y)- 0.325f) / 0.65f)) + 7;
+                row = (int)((((worldPos.y) - 0.1625f) / 0.65f)) + 7;
                 
+            }
+            else if (worldPos.y == 0)
+            {
+                row = 7;
+
             }
             transform.position=GetPos(row.ToString(),col.ToString());
             bool move=true;
