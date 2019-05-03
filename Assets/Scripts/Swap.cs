@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class Swap : MonoBehaviour
 {
     public GameObject swapPanel;
+   static public int push=0;
     public Text swapText;
     // Start is called before the first frame update
     public void SStart()
     {
+        push++;
         swapPanel.SetActive(false);
         StartCoroutine(SwapRack());
     }
@@ -18,13 +20,24 @@ public class Swap : MonoBehaviour
     // Update is called once per frame
     public IEnumerator SwapRack()
     {
-        GameManager.button = 3;
-        swapPanel.SetActive(true);
-        swapText.text = "Swap";
+        if (push==1)
+        {
+            GameManager.button = 3;
+            swapPanel.SetActive(true);
+            swapText.text = "Swap";
+            
+            yield return new WaitForSecondsRealtime(1);
+            swapPanel.SetActive(false);
 
-        yield return new WaitForSecondsRealtime(1);
-
-        swapPanel.SetActive(false);
+        }
+        else if (push==2)
+        {
+            swapPanel.SetActive(false);
+            GameManager.button = 5;
+            push=push-2;
+            Rack.FSwap();
+        }
+        
         
 
     }

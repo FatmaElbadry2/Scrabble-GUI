@@ -9,6 +9,8 @@ public class Rack : MonoBehaviour
     public GameObject Letterprefab;
 
     public static List<string> letters = new List<string>();
+
+    public static List<string> Swappedletters = new List<string>();
     public static List<int> rows = new List<int>();
     public static List<int> colomuns = new List<int>();
     public Sprite[] LetterSprite;
@@ -122,6 +124,16 @@ public class Rack : MonoBehaviour
         HintCol.Clear();
         HintRow.Clear();
         sr.Close();
+    }
+    static public void FSwap()
+    {
+        for (int i = 0; i <7; i++)
+        {
+          if ( LetterList[i].GetComponent<SpriteRenderer>().color ==new Color(1f, 0.7568628f, 0.6901961f))
+          {
+              Swappedletters.Add(LetterList[i].GetComponent<SpriteRenderer>().sprite.name);
+          }
+        }
         
     }
     public void Create(ref List<string> input)
@@ -129,6 +141,7 @@ public class Rack : MonoBehaviour
         LetterList.Clear();
         Rpos.Clear();
         RorB.Clear();
+        Swappedletters.Clear();
         //xpos.Add(pos1);
         for (int i = 0; i < 7; i++)
         {
@@ -201,6 +214,7 @@ public class Rack : MonoBehaviour
         }
         return pos = new Vector3(coloumn, row, -2);
     }
+      
 
     public void Answer(string ans)
     {

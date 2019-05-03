@@ -55,11 +55,22 @@ public class ItemDragHandler : MonoBehaviour
     }
     void OnMouseUp()
     {
+        if(Swap.push==1)
+        {
+            if(GetComponent<SpriteRenderer>().color!=new Color(1f, 0.7568628f, 0.6901961f))
+            {
+                GetComponent<SpriteRenderer>().color = new Color(1f, 0.7568628f, 0.6901961f);
+                }
+            else
+            {
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
+            }
+        }
         int row=0;
         int col=0;
-        if ((worldPos.x < 0 || worldPos.x > 9.1) /*&& (worldPos.y<-4.55 || worldPos.y>4.55)*/)
+        if ((worldPos.x+0.325 < 0 || worldPos.x+0.325 > 9.75) )
         {
-            if(OriginalPos.x>=0 && OriginalPos.x<=9.1 && OriginalPos.y>=-5.2 && OriginalPos.y <=5.2)
+            if(OriginalPos.x>=0 && OriginalPos.x<=9.75 && OriginalPos.y>=-5.2 && OriginalPos.y <=4.55)
             {
                 for (int i = 0; i < 7; i++)
                 {
@@ -75,17 +86,17 @@ public class ItemDragHandler : MonoBehaviour
             transform.position = OriginalPos;
             transform.localScale = new Vector3(1, 1, 0);
         }
-        else if(worldPos.x >= 0 && worldPos.x <= 9.1 && worldPos.y >= -5.2 && worldPos.y <= 5.2)
+        else if(worldPos.x+ 0.325 >= 0 && worldPos.x+ 0.325 <= 9.75 && worldPos.y >= -5.2 && worldPos.y <= 4.55)
         {
-            col = (int)((worldPos.x) / 0.65f);
+            col = (int)((worldPos.x+0.325f) / 0.65f);
             if (worldPos.y > 0)
             {
-                row = (int)(((worldPos.y) / 0.65f) + 7);
+                row = (int)((((worldPos.y)-0.325f )/ 0.65f) + 7);
             }
             else if (worldPos.y < 0)
             {
-                row = (int)(((worldPos.y) / 0.65f)) + 7;
-                Debug.Log(row.ToString());
+                row = (int)((((worldPos.y)- 0.325f) / 0.65f)) + 7;
+                
             }
             transform.position=GetPos(row.ToString(),col.ToString());
             bool move=true;
