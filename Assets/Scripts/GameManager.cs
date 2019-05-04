@@ -26,8 +26,10 @@ public class GameManager : MonoBehaviour
     string[] line1;
     public static int button; //Which button was pressed in human mode: 1-Play 2-Swap 3-Pass 4-Hint
     StreamReader sr=new StreamReader("Game2.txt");
+    public Client client=new Client();
     void Start()
     {
+        client.run();
         Scenename = SceneManager.GetActiveScene().name;
         
         line1 = sr.ReadLine().Split();
