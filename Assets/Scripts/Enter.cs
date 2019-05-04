@@ -30,6 +30,7 @@ public class Enter : MonoBehaviour
         
         Rack.getpos();
         GameManager.button = 1;
+       // Client.run();
          
     }
 }

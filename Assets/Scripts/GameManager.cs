@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     //StreamReader sr=new StreamReader("Game2.txt");
     void Start()
     {
-        client.run();
+        Client.run();
         Scenename = SceneManager.GetActiveScene().name;
         //client.Send(Scenename+"\0");
       //  line1 = sr.ReadLine().Split();
@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer.TimerUpdate("10");
-        message.Display("you're an idiot");
+       // timer.TimerUpdate("10");
+       // screen.Display("you're an idiot");
         if ( frame % 300000 == 0 && GUIInterface.Messages.Count>0)
         {
             string message=GUIInterface.Messages[0];
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
            
             score.update(int.Parse(GUIInterface.GetPscore()), "\0");
             score.update(int.Parse(GUIInterface.GetOscore()), "\0");
-            screen.Display(GUIInterface.GetScreenMessage());
+           // screen.Display(GUIInterface.GetScreenMessage());
             
             // line1 = sr.ReadLine().Split();
             // if (line1[0] == "R")

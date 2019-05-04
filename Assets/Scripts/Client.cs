@@ -13,19 +13,19 @@ public class Client
     {
     }
 
-    public void run()
+    public static void run()
     {
         Thread thr = new Thread(RunClientAsync);
         thr.Start();
     }
-    public void Send(string msg)
+    public static void Send(string msg)
     {
         UTF8Encoding encoding = new UTF8Encoding();
         byte[] bytes = encoding.GetBytes(msg);
         pipeClient.Write(bytes, 0, bytes.Length);
     }
 
-    public void RunClientAsync()
+    public static void RunClientAsync()
     {
         using (pipeClient = new NamedPipeClientStream(".", "newpipe", PipeDirection.InOut))
         {
@@ -40,7 +40,16 @@ public class Client
                     GameManager.ModeSent=true;
 
                 }
-
+            
+                string message=GUIInterface.CheckButton();
+                if (message!="\0"){
+                  Send(message);
+                }
+                else{
+                    Send("-1,\0");
+                }
+                
+                
                 StringBuilder messageBuilder = new StringBuilder();
                 string messageChunk = string.Empty;
                 byte[] messageBuffer = new byte[40];
@@ -56,10 +65,8 @@ public class Client
                     //Console.WriteLine("Closed");
                     break;
                 }
-                string message=GUIInterface.CheckButton();
-                if (message!="\0"){
-                  Send(message);
-                }
+               // Send("pleasework\0");
+             
             }
             int x = 0;
 

@@ -24,8 +24,12 @@ public class Pass : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1);
 
-        passPanel.SetActive(false);
-
+          passPanel.SetActive(false);
+        //   string message=GUIInterface.CheckButton();
+        //         if (message!="\0"){
+        //           Client.Send(message);
+        //         }
+    
         
 
     }
