@@ -23,19 +23,20 @@ public class GameManager : MonoBehaviour
 
     public ScreenMessage message;
     string Letter;
-    public string Scenename;
+    public static string Scenename="\0";
     ScreenMessage screen=new ScreenMessage();
     int number;
     List<string> input = new List<string>();
     List<string> input2 = new List<string>();
     string[] line1;
+    public static bool ModeSent=false;
     public static int button; //Which button was pressed in human mode: 1-Play 2-Swap 3-Pass 4-Hint
     //StreamReader sr=new StreamReader("Game2.txt");
     void Start()
     {
         client.run();
         Scenename = SceneManager.GetActiveScene().name;
-        client.Send(Scenename+"\0");
+        //client.Send(Scenename+"\0");
       //  line1 = sr.ReadLine().Split();
         input.Add("Red Army");
         input.Add("Opponent");
@@ -64,6 +65,9 @@ public class GameManager : MonoBehaviour
                 if (newletter.Count!=0) 
                 l.Create(ref newletter);
                 } 
+            }
+            if (HintWord.Count>0){
+                Rack.getHint();     
             }
            
             score.update(int.Parse(GUIInterface.GetPscore()), "\0");
@@ -152,7 +156,7 @@ public class GameManager : MonoBehaviour
         else if (frame % 300000 != 0) frame++;
         
        // else if (sr.EndOfStream) sr.Close();
-       client.Send(GUIInterface.CheckButton());
+       //client.Send(GUIInterface.CheckButton());
         
     }
 

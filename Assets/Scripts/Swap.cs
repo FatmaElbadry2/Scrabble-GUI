@@ -33,9 +33,9 @@ public class Swap : MonoBehaviour
         else if (push==2)
         {
             swapPanel.SetActive(false);
-            GameManager.button = 5;
             push=push-2;
             Rack.FSwap();
+            GameManager.button = 5;
         }
         
         

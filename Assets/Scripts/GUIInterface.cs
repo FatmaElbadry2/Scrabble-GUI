@@ -14,13 +14,13 @@ public class GUIInterface {
      static string Pscore;
      static string Oscore;
      static string ScreenMessage;
-     static List<string> Rack=new List<string>();
+     static List<string> MyRack=new List<string>();
      static List<List<string>> Letter=new List<List<string>>();
      static void SetRack(string rack){
-         Rack.Clear();
+         MyRack.Clear();
          foreach (char letter in rack)
          {  if (letter!='0') {
-           Rack.Add(letter.ToString()); 
+           MyRack.Add(letter.ToString()); 
          } 
          }
        }
@@ -55,46 +55,87 @@ public class GUIInterface {
             if (parameters[0]!="-1"){
                time=parameters[1];
             }
-          if (parameters[0]=="0"){
+          if (parameters[0]=="0"){   // names only
               Pname=parameters[2];
               Oname=parameters[3];       
               ScreenMessage="Connected";
           }
-          else if (parameters[0]=="1"){
+          else if (parameters[0]=="1"){  //receive the rack
             ScreenMessage="Hellooo";
             Pscore=parameters[2];
             Oscore=parameters[3];
             SetRack(parameters[4]);
           //  SetBoard(parameters[5],int.Parse(parameters[6]),int.Parse(parameters[7]),parameters[8]);  
           }
-          else if (parameters[0]=="2" || parameters[0]=="3"){
+          else if (parameters[0]=="2" || parameters[0]=="3"){   // play of the agent or opponent in AI mode
               Pscore=parameters[2];
               Oscore=parameters[3];
               ScreenMessage="Agent played";
               SetRack(parameters[4]);
               SetBoard(parameters[5],int.Parse(parameters[6]),int.Parse(parameters[7]),parameters[8]);
           }
-          else if (parameters[0]=="3"){
-              Pscore=parameters[2];
-              Oscore=parameters[3];
-              // display pass
-              ScreenMessage="Pass";
+        //   else if (parameters[0]=="3"){
+        //       Pscore=parameters[2];
+        //       Oscore=parameters[3];
+        //       // display pass
+        //       ScreenMessage="Pass";
              
-          }
+        //   }
             else if (parameters[0]=="5"){
             
-               ScreenMessage=parameters[9];
+               ScreenMessage=parameters[10];
                Pscore=parameters[2];
-               Oscore=parameters[3];
-               
+               Oscore=parameters[3];  
                SetRack(parameters[4]);
+               ConvertMessageToHint(parameters[5],int.Parse(parameters[6]) , int.Parse(parameters[7]),int.Parse(parameters[8]));
+               Rack.Answer(parameters[9]);
           }
            else if (parameters[0]=="-1"){
             // terminate connnection
              ScreenMessage="Connection terminated";
           }
-          
-    
+        }
+        public static string ConvertMessage(int button){
+           string message="\0";
+            if (button==1){
+             message="0,"+ConvertPlayToMessage()+"\0";
+            }
+            else if (button==5){
+                message="1,"+ConvertExchangeToMessage()+",\0";
+            }
+            else if (button==3){
+                 message="2,\0";
+            }
+            else if (button==4){
+                message="3,\0";
+            }
+            return message;
+        }
+        public static string ConvertPlayToMessage(){
+            string message=Rack.letters[0]+Rack.rows[0].ToString()+Rack.colomuns[0].ToString()+",";
+              for (int i=0;i<Rack.letters.Count;i++){
+                message=message+Rack.letters[i]+Rack.rows[i].ToString()+Rack.colomuns[i].ToString()+",";
+              }
+              return message;
+        }
+        public static string ConvertExchangeToMessage(){
+            string message=Rack.Swappedletters[0];
+           for (int i=0;i<Rack.Swappedletters.Count;i++){
+               message=message+Rack.Swappedletters[i];
+           } 
+           return message;
+        }
+        public static void ConvertMessageToHint(string hint,int row , int col, int direction){
+            // d=0 horizontal , 1 vertical
+            foreach (char letter in hint){
+               GameManager.HintRow.Add(row);
+               GameManager.HintCol.Add(col);
+               GameManager.HintWord.Add(letter.ToString());
+               if (direction==0)
+               col++;
+               else
+               row--;
+            } 
         }
 
         public static string Gettime(){
@@ -107,7 +148,7 @@ public class GUIInterface {
            return Oname;
         }
         public static List<string> GetRack(){
-            return Rack;
+            return MyRack;
         } 
         public static List<List<string>> GetLetters(){
             return Letter;
@@ -121,25 +162,25 @@ public class GUIInterface {
         public static string GetScreenMessage(){
             return ScreenMessage;
         }
+
         public static string CheckButton(){
          if (GameManager.button==1){
-            GameManager.button=0;
-            return "";
+             GameManager.button=0;
+            return ConvertMessage(1);
         }
         else if (GameManager.button==5){  //exchange 
-            GameManager.button=0;
-             return "";
+              GameManager.button=0;
+             return ConvertMessage(5);
         }
-        else if (GameManager.button==3){
-           //client.Send("Pass\0");
+        else if (GameManager.button==3){  //pass
            GameManager.button=0;
-           return "Pass,\0";
+           return ConvertMessage(3);
         }
-        else{
-          // client.Send("Hint\0");
+        else if (GameManager.button==4){   //hint
            GameManager.button=0;
-           return "Hint,\0";
+           return ConvertMessage(4);
         }
+        return "\0";
         }
  
     }

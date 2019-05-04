@@ -20,7 +20,7 @@ public class Enter : MonoBehaviour
     // Update is called once per frame
     public IEnumerator SendWordCheck()
     {
-        GameManager.button = 1;
+       
         playPanel.SetActive(true);
         playText.text = "Play";
 
@@ -29,7 +29,7 @@ public class Enter : MonoBehaviour
         playPanel.SetActive(false);
         
         Rack.getpos();
-       
+        GameManager.button = 1;
          
     }
 }
