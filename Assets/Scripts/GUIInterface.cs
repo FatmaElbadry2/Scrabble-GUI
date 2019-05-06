@@ -52,16 +52,18 @@ public class GUIInterface {
 
         public static void InterpretMessage(string message){
           string [] parameters=message.Split(',');
-            if (parameters[0]!="-1"){
-               time=parameters[1];
-            }
+            // if (parameters[0]!="-1"){
+            //    time=parameters[1];
+            // }
           if (parameters[0]=="0"){   // names only
+             time=parameters[1];
               Pname=parameters[2];
               Oname=parameters[3];       
               ScreenMessage="Connected";
           }
           else if (parameters[0]=="1"){  //receive the rack
             ScreenMessage="Hellooo";
+            time=parameters[1];
             Pscore=parameters[2];
             Oscore=parameters[3];
             SetRack(parameters[4]);
@@ -69,6 +71,7 @@ public class GUIInterface {
           }
           else if (parameters[0]=="2" || parameters[0]=="3"){   // play of the agent or opponent in AI mode
               Pscore=parameters[2];
+              time=parameters[1];
               Oscore=parameters[3];
               ScreenMessage="Agent played";
               SetRack(parameters[4]);
@@ -82,7 +85,7 @@ public class GUIInterface {
              
         //   }
             else if (parameters[0]=="5"){
-            
+               time=parameters[1];
                ScreenMessage=parameters[10];
                Pscore=parameters[2];
                Oscore=parameters[3];  
@@ -99,6 +102,7 @@ public class GUIInterface {
            string message="\0";
             if (button==1){
              message="0,"+ConvertPlayToMessage()+"\0";
+             int x=0;
             }
             else if (button==5){
                 message="1,"+ConvertExchangeToMessage()+",\0";
@@ -112,9 +116,9 @@ public class GUIInterface {
             return message;
         }
         public static string ConvertPlayToMessage(){
-            string message=Rack.letters[0]+Rack.rows[0].ToString()+Rack.colomuns[0].ToString()+",";
-              for (int i=0;i<Rack.letters.Count;i++){
-                message=message+Rack.letters[i]+Rack.rows[i].ToString()+Rack.colomuns[i].ToString()+",";
+            string message=Rack.letters[0]+(14-Rack.rows[0]).ToString()+Rack.colomuns[0].ToString()+",";
+              for (int i=1;i<Rack.letters.Count;i++){
+                message=message+Rack.letters[i]+(14-Rack.rows[i]).ToString()+Rack.colomuns[i].ToString()+",";
               }
               return message;
         }

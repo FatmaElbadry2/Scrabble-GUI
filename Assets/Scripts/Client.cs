@@ -36,7 +36,7 @@ public class Client
             {
                 if (GameManager.Scenename != "\0" && !GameManager.ModeSent)
                 {
-                    Send(GameManager.Scenename + ",\0");
+                    Send(GameManager.Scenename + "\0");
                     GameManager.ModeSent=true;
 
                 }
@@ -52,12 +52,16 @@ public class Client
                 
                 StringBuilder messageBuilder = new StringBuilder();
                 string messageChunk = string.Empty;
-                byte[] messageBuffer = new byte[40];
+                byte[] messageBuffer = new byte[50];
                 pipeClient.Read(messageBuffer, 0, messageBuffer.Length);
                 messageChunk = Encoding.UTF8.GetString(messageBuffer);
                 messageBuilder.Append(messageChunk);
                 messageBuffer = new byte[messageBuffer.Length];
-                GUIInterface.Messages.Add(messageBuilder.ToString());
+               // GUIInterface.Messages.Add(messageBuilder.ToString());
+                if (messageBuilder.ToString()[0]!='n'){
+                    GUIInterface.Messages.Add(messageBuilder.ToString());
+                }
+
                 string[] parameters = messageBuilder.ToString().Split(',');
                 if (parameters[0] == "-1")
                 {

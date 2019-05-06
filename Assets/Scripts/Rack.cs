@@ -7,21 +7,27 @@ using UnityEngine.SceneManagement;
 public class Rack : MonoBehaviour
 {
     public GameObject Letterprefab;
+    public GameObject LetterPanel;
+    static public List<int> blanks =new List<int>();
+    int x;
 
     public static List<string> letters = new List<string>();
-
+    
     public static List<string> Swappedletters = new List<string>();
     public static List<int> rows = new List<int>();
     public static List<int> colomuns = new List<int>();
     public Sprite[] LetterSprite;
+    static Sprite BlankSprite;
+    
     public int m = letters.Count;
     public static List<GameObject> LetterList = new List<GameObject>();
     public static List<string> RackList = new List<string>();
     public static List<int> RorB = new List<int>(); //the letter on board(0) or on rack(1)
     public static int[] EmptyPlaces = new int[7];
     Vector3 pos = new Vector3(0, 0, 0);
+
     int arrayIdx = 0;
-    int x;
+   
     float row = -4.25f;
     float coloumn = -8.9f;
 
@@ -29,6 +35,12 @@ public class Rack : MonoBehaviour
     public static List<Vector3> Rpos = new List<Vector3>();
 
    
+    public   IEnumerator checkletter()
+    {
+        while(!Input.anyKeyDown){
+            yield return null;
+        }
+    }
     static public void getpos()
     {
         int row1 = 0;
@@ -40,16 +52,16 @@ public class Rack : MonoBehaviour
             if (LetterList[i].transform.position.x >= 0 && LetterList[i].transform.position.x <= 9.75 && RorB[i] == 1)
             {
                 letters.Add(LetterList[i].GetComponent<SpriteRenderer>().sprite.name);
-                col = (int)((LetterList[i].transform.position.x) / 0.65f);
+                col = (int)((LetterList[i].transform.position.x+0.325f) / 0.65f);
                 
-                if (LetterList[i].transform.position.y > 0)
+                if (LetterList[i].transform.position.y+0.1625f > 0)
                 {
-                    row1 = (int)(((LetterList[i].transform.position.y) / 0.65f) + 7);
+                    row1 = (int)((((LetterList[i].transform.position.y) +0.1625f )/ 0.65f) + 7);
                 }
-                else if (LetterList[i].transform.position.y < 0)
+                else if (LetterList[i].transform.position.y-0.1625f < 0)
                 {
-                    row1 = (int)(((LetterList[i].transform.position.y) / 0.65f) )+7;
-                    Debug.Log(row1.ToString());
+                    row1 = (int)((((LetterList[i].transform.position.y) - 0.1625f) / 0.65f)) + 7;
+                
                 }
                 else if (LetterList[i].transform.position.y ==0)
                 {
@@ -61,6 +73,7 @@ public class Rack : MonoBehaviour
         }
 
     }
+
 
     static public IEnumerator getHint()
     {
@@ -124,19 +137,37 @@ public class Rack : MonoBehaviour
     }
     public void Create(ref List<string> input)
     {
+        int len=LetterList.Count;
+        if(Rack.LetterList.Count>0)
+        {
+            for (int k = 0; k < len; k++)
+            {
+                 Destroy(LetterList[k]);
+            }
+        }
+        
+        blanks.Clear();
         LetterList.Clear();
+        letters.Clear();
+        rows.Clear();
+        colomuns.Clear();
         Rpos.Clear();
         RorB.Clear();
         Swappedletters.Clear();
         //xpos.Add(pos1);
+        
+        
+            BlankSprite=LetterSprite[26];
+        
         for (int i = 0; i < 7; i++)
         {
 
-            for (int j = 0; j < 26; j++)
+            for (int j = 0; j < 27; j++)
             {
                 if (LetterSprite[j].name == input[i])
                 {
                     arrayIdx = j;
+                    
 
 
                 }
@@ -144,6 +175,14 @@ public class Rack : MonoBehaviour
             EmptyPlaces[i] = 1;
             pos = new Vector3(coloumn + (i * 0.8f), row, -2);
             Sprite nLetter = LetterSprite[arrayIdx];
+            if (nLetter.name=="0")
+            {
+                blanks.Add(1);
+                 
+            }
+            else{
+                blanks.Add(0);
+            }
             GameObject newLetter = Instantiate(Letterprefab);
             newLetter.GetComponent<SpriteRenderer>().sprite = nLetter;
             newLetter.transform.position = pos;
@@ -153,8 +192,10 @@ public class Rack : MonoBehaviour
 
                 newLetter.AddComponent<ItemDragHandler>();
                 newLetter.AddComponent<BoxCollider2D>();
+               // newLetter.GetComponent<ItemDragHandler>().LetterPanel=this.LetterPanel;
             }
             LetterList.Add(newLetter);
+         
             RackList.Add(input[i]);
             Rpos.Add(pos);
             RorB.Add(1);
@@ -163,7 +204,7 @@ public class Rack : MonoBehaviour
     }
     int ReturnIndx(string letter)
     {
-        for (int i = 0; i < 26; i++)
+        for (int i = 0; i < 27; i++)
         {
             if (letter == LetterSprite[i].name)
             {
@@ -211,13 +252,17 @@ public class Rack : MonoBehaviour
                 if(LetterList[i].transform.position.x >= 0 && LetterList[i].transform.position.x <= 9.1 && LetterList[i].transform.position.y >= -5.2 && LetterList[i].transform.position.y <= 5.2)
                 {
                    Destroy(LetterList[i].GetComponent<ItemDragHandler>());
-                    Destroy(LetterList[i].GetComponent<BoxCollider2D>()); 
-                }
+                   Destroy(LetterList[i].GetComponent<BoxCollider2D>()); 
+                   LetterList.RemoveAt(i);               
+                    }
             }
             return;
         }
         else if (ans == "NO")
         {
+        letters.Clear();
+        rows.Clear();
+        colomuns.Clear();
             for (int i = 0; i < 7; i++)
             {
                 if (LetterList[i].transform.position.x >= 0 && LetterList[i].transform.position.x <= 9.1 && LetterList[i].transform.position.y >= -5.2 && LetterList[i].transform.position.y <= 5.2)
@@ -232,6 +277,13 @@ public class Rack : MonoBehaviour
                             break;
                         }
                     }
+                    if(blanks[i]==1)
+                    {
+                        LetterList[i].GetComponent<SpriteRenderer>().sprite=BlankSprite;
+                     
+                    }
+
+                    
                 }
             } 
         }
@@ -275,7 +327,7 @@ public class Rack : MonoBehaviour
                         break;
                     }
                 }
-                for (int k = 0; k < 26; k++)
+                for (int k = 0; k < 27; k++)
                 {
                     if (LetterSprite[k].name == input[i])
                     {
@@ -319,7 +371,7 @@ public class Rack : MonoBehaviour
                     RackList[k] = newl[j];
                 }
             }
-            for (int k = 0; k < 26; k++)
+            for (int k = 0; k < 27; k++)
             {
                 if (LetterSprite[k].name == newl[j])
                 {
