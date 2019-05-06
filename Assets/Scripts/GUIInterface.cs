@@ -30,8 +30,8 @@ public class GUIInterface {
             if (letter!='0') {
             List<string> addedletter=new List<string>();
             addedletter.Add(letter.ToString());
-            addedletter.Add(row.ToString());
-            addedletter.Add(column.ToString());
+            addedletter.Add((row-1).ToString());
+            addedletter.Add((column-1).ToString());
             Letter.Add(addedletter);
            
             if (direction=="0")  //horizontal
@@ -117,15 +117,27 @@ public class GUIInterface {
         }
 
         public static bool CheckIfInorder (){
+            int flag=0;
             for (int i=1;i<Rack.rows.Count;i++){
-                if (Rack.rows[i-1]!=Rack.rows[i])
-                     return false;  
+                if (Rack.rows[i-1]!=Rack.rows[i]){
+                    flag=1;
+                    break; 
+                }        
             }
+            if (flag==0){
+                return true;
+            }
+                flag=0;
              for (int i=1;i<Rack.colomuns.Count;i++){
-                if (Rack.colomuns[i-1]!=Rack.colomuns[i])
-                     return false;  
+                if (Rack.colomuns[i-1]!=Rack.colomuns[i]){
+                    flag=1;
+                    break; 
+                }         
             }
-               return true;
+            if (flag==0){
+                return true;
+            }
+               return false;
         }
         public static void SortPlays(){
             if (CheckIfInorder()){
