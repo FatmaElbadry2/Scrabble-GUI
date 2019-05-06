@@ -115,7 +115,54 @@ public class GUIInterface {
             }
             return message;
         }
-        public static string ConvertPlayToMessage(){
+
+        public static bool CheckIfInorder (){
+            for (int i=1;i<Rack.rows.Count;i++){
+                if (Rack.rows[i-1]!=Rack.rows[i])
+                     return false;  
+            }
+             for (int i=1;i<Rack.colomuns.Count;i++){
+                if (Rack.colomuns[i-1]!=Rack.colomuns[i])
+                     return false;  
+            }
+               return true;
+        }
+        public static void SortPlays(){
+            if (CheckIfInorder()){
+                if (Rack.rows[0]==Rack.rows[1]){
+                    for (int i=0;i<Rack.colomuns.Count;i++){
+                        for (int j=i;j<Rack.colomuns.Count;j++){
+                            if (Rack.colomuns[j]<Rack.colomuns[i]){
+                                int tempcol=Rack.colomuns[i];
+                                Rack.colomuns[i]=Rack.colomuns[j];
+                                Rack.colomuns[j]=tempcol;
+                                string templetter=Rack.letters[i];
+                                Rack.letters[i]=Rack.letters[j];
+                                Rack.letters[j]=templetter;
+                            }
+                            
+                        }
+                    }
+                }
+                else if (Rack.colomuns[0]==Rack.colomuns[1]){
+                        for (int i=0;i<Rack.rows.Count;i++){
+                        for (int j=i;j<Rack.rows.Count;j++){
+                            if (Rack.rows[j]<Rack.rows[i]){
+                                int tempcol=Rack.rows[i];
+                                Rack.rows[i]=Rack.rows[j];
+                                Rack.rows[j]=tempcol;
+                                string templetter=Rack.letters[i];
+                                Rack.letters[i]=Rack.letters[j];
+                                Rack.letters[j]=templetter;
+                            }
+                            
+                        }
+                    } 
+                }
+            }
+        }
+        public static string ConvertPlayToMessage(){    
+            SortPlays();
             string message=Rack.letters[0]+(14-Rack.rows[0]).ToString()+Rack.colomuns[0].ToString()+",";
               for (int i=1;i<Rack.letters.Count;i++){
                 message=message+Rack.letters[i]+(14-Rack.rows[i]).ToString()+Rack.colomuns[i].ToString()+",";
