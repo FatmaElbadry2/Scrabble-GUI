@@ -91,7 +91,7 @@ public class GUIInterface {
                Oscore=parameters[3];  
                SetRack(parameters[4]);
                ConvertMessageToHint(parameters[5],int.Parse(parameters[6]) , int.Parse(parameters[7]),int.Parse(parameters[8]));
-             //  Rack.Answer(parameters[9]);
+               Rack.Answer(parameters[9]);
           }
            else if (parameters[0]=="-1"){
             // terminate connnection

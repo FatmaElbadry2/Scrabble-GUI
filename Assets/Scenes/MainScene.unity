@@ -608,7 +608,6 @@ MonoBehaviour:
   l: {fileID: 380785227}
   timer: {fileID: 1433414688}
   message: {fileID: 1792365088}
-  Scenename: 
 --- !u!1001 &74149221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -900,6 +899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Letterprefab: {fileID: 683080927946987475, guid: 2bf875fe771e3104397d87dcd0c228ac,
     type: 3}
+  LetterPanel: {fileID: 0}
   LetterSprite:
   - {fileID: 21300000, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
   - {fileID: 21300024, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
@@ -927,6 +927,7 @@ MonoBehaviour:
   - {fileID: 21300046, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
   - {fileID: 21300040, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
   - {fileID: 21300050, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
+  - {fileID: 21300002, guid: ce6800f93fced2e498bef99476ff05f0, type: 3}
   m: 0
 --- !u!1001 &85459004
 PrefabInstance:
@@ -3911,6 +3912,7 @@ MonoBehaviour:
   - {fileID: 21300046, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
   - {fileID: 21300040, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
   - {fileID: 21300050, guid: b4ac9ab0e921d974cb0224a5df469253, type: 3}
+  - {fileID: 21300002, guid: ce6800f93fced2e498bef99476ff05f0, type: 3}
 --- !u!1001 &383838445
 PrefabInstance:
   m_ObjectHideFlags: 0
