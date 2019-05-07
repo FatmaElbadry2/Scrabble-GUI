@@ -70,8 +70,8 @@ public class GameManager : MonoBehaviour
                 Rack.getHint();     
             }
            
-            score.update(int.Parse(GUIInterface.GetPscore()), "\0");
-            score.update(int.Parse(GUIInterface.GetOscore()), "\0");
+            score.update1(int.Parse(GUIInterface.GetPscore()), "\0");
+            score.update2(int.Parse(GUIInterface.GetOscore()), "\0");
            // screen.Display(GUIInterface.GetScreenMessage());
             
             // line1 = sr.ReadLine().Split();

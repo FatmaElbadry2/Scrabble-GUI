@@ -7,7 +7,7 @@ public class Scores : MonoBehaviour
     public GameObject scoreboardrprefab;
     public GameObject scoreboardrprefab1;
    
-    int turn = 1;
+    
    
     public Sprite[] Scoreboards;
     string Pl1name,Pl2name;
@@ -40,49 +40,24 @@ public class Scores : MonoBehaviour
 
 
     }
-    public void update(int newscore,string word)
+    public void update1(int newscore,string word)
     {
-        if (turn==1)
-        {
+    
             scoreboardrprefab.SetActive(true);
             P1name.text = Pl1name;
             P1Score.text =  newscore.ToString();
-            turn++;
            
-
-        }
-        else if (turn == 2)
-        {
-           
-            scoreboardrprefab1.SetActive(true);
+    }   
+        public void update2(int newscore,string word)
+    {
+    
+             scoreboardrprefab1.SetActive(true);
             P2name.text = Pl2name;
             P2Score.text =  newscore.ToString();
-            turn++;
-           
-        }
-        else if (turn == 3)
-        {
-           
-            scoreboardrprefab.SetActive(true);
-            P1name.text = Pl1name;
-            P1Score.text =  newscore.ToString();
-            turn++;
-        }
-        else {
-              if (turn % 2 == 0) {
-              scoreboardrprefab1.SetActive(true);
-            P2name.text = Pl2name;
-            P2Score.text =  newscore.ToString();
-            turn++;
+    }     
 
-            }
-            else {
-                scoreboardrprefab.SetActive(true);
-            P1name.text = Pl1name;
-            P1Score.text =  newscore.ToString();
-            turn++;
-            }
-        }
+       
+        
       
-    }
+    
 }
