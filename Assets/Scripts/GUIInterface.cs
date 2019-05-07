@@ -30,8 +30,8 @@ public class GUIInterface {
             if (letter!='0') {
             List<string> addedletter=new List<string>();
             addedletter.Add(letter.ToString());
-            addedletter.Add((row-1).ToString());
-            addedletter.Add((column-1).ToString());
+            addedletter.Add((row).ToString());
+            addedletter.Add((column).ToString());
             Letter.Add(addedletter);
            
             if (direction=="0")  //horizontal
@@ -90,7 +90,7 @@ public class GUIInterface {
                Pscore=parameters[2];
                Oscore=parameters[3];  
                SetRack(parameters[4]);
-               ConvertMessageToHint(parameters[5],int.Parse(parameters[6]) , int.Parse(parameters[7]),int.Parse(parameters[8]));
+             //  ConvertMessageToHint(parameters[5],int.Parse(parameters[6]) , int.Parse(parameters[7]),int.Parse(parameters[8]));
                Rack.Answer(parameters[9]);
           }
            else if (parameters[0]=="-1"){
@@ -141,6 +141,9 @@ public class GUIInterface {
         }
         public static void SortPlays(){
             if (CheckIfInorder()){
+                if (Rack.rows.Count<=1){
+                        return;
+                }
                 if (Rack.rows[0]==Rack.rows[1]){
                     for (int i=0;i<Rack.colomuns.Count;i++){
                         for (int j=i;j<Rack.colomuns.Count;j++){
@@ -159,7 +162,7 @@ public class GUIInterface {
                 else if (Rack.colomuns[0]==Rack.colomuns[1]){
                         for (int i=0;i<Rack.rows.Count;i++){
                         for (int j=i;j<Rack.rows.Count;j++){
-                            if (Rack.rows[j]<Rack.rows[i]){
+                            if (Rack.rows[j]>Rack.rows[i]){
                                 int tempcol=Rack.rows[i];
                                 Rack.rows[i]=Rack.rows[j];
                                 Rack.rows[j]=tempcol;
@@ -175,9 +178,9 @@ public class GUIInterface {
         }
         public static string ConvertPlayToMessage(){    
             SortPlays();
-            string message=Rack.letters[0]+(14-Rack.rows[0]).ToString()+Rack.colomuns[0].ToString()+",";
+            string message=Rack.letters[0]+(14-Rack.rows[0]).ToString("D2")+Rack.colomuns[0].ToString("D2")+",";
               for (int i=1;i<Rack.letters.Count;i++){
-                message=message+Rack.letters[i]+(14-Rack.rows[i]).ToString()+Rack.colomuns[i].ToString()+",";
+                message=message+Rack.letters[i]+(14-Rack.rows[i]).ToString("D2")+Rack.colomuns[i].ToString("D2")+",";
               }
               return message;
         }
@@ -235,7 +238,7 @@ public class GUIInterface {
               GameManager.button=0;
              return ConvertMessage(5);
         }
-        else if (GameManager.button==3){  //pass
+        else if (GameManager.button==2){  //pass
            GameManager.button=0;
            return ConvertMessage(3);
         }

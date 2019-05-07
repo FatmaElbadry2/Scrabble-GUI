@@ -126,7 +126,7 @@ public class Rack : MonoBehaviour
     }
     static public void FSwap()
     {
-        for (int i = 0; i <7; i++)
+        for (int i = 0; i <LetterList.Count; i++)
         {
           if ( LetterList[i].GetComponent<SpriteRenderer>().color ==new Color(1f, 0.7568628f, 0.6901961f))
           {
@@ -137,12 +137,13 @@ public class Rack : MonoBehaviour
     }
     public void Create(ref List<string> input)
     {
-        int len=LetterList.Count;
+        
         if(Rack.LetterList.Count>0)
         {
-            for (int k = 0; k < len; k++)
+            for (int k = LetterList.Count-1; k >-1 ; k--)
             {
                  Destroy(LetterList[k]);
+                
             }
         }
         
@@ -159,7 +160,7 @@ public class Rack : MonoBehaviour
         
             BlankSprite=LetterSprite[26];
         
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < input.Count; i++)
         {
 
             for (int j = 0; j < 27; j++)
@@ -245,15 +246,17 @@ public class Rack : MonoBehaviour
 
     static public void Answer(string ans)
     {
+        int t=0;
         if (ans=="YES")
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i <LetterList.Count ; i++)
             {
                 if(LetterList[i].transform.position.x >= 0 && LetterList[i].transform.position.x <= 9.1 && LetterList[i].transform.position.y >= -5.2 && LetterList[i].transform.position.y <= 5.2)
                 {
                    Destroy(LetterList[i].GetComponent<ItemDragHandler>());
                    Destroy(LetterList[i].GetComponent<BoxCollider2D>()); 
-                   LetterList.RemoveAt(i);               
+                   LetterList.RemoveAt(i);   
+                   i--;          
                     }
             }
             return;
